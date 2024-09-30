@@ -62,6 +62,8 @@ return function (RouteBuilder $routes): void {
          */
         $builder->connect('/pages/*', 'Pages::display');
 
+        $builder->connect('/cars', ['controller' => 'Cars', 'action' => 'index']);
+
         /*
          * Connect catchall routes for all controllers.
          *
