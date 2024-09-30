@@ -35,7 +35,7 @@ class CarsController extends AppController
      */
     public function view($id = null)
     {
-        $car = $this->Cars->get($id, contain: []);
+        $car = $this->Cars->get($id, contain: ['Quotes']);
         $this->set(compact('car'));
     }
 
@@ -97,65 +97,56 @@ class CarsController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
-     */
-    // public function add()
-    // {
-    //     $car = $this->Cars->newEmptyEntity();
-    //     if ($this->request->is('post')) {
-    //         $car = $this->Cars->patchEntity($car, $this->request->getData());
-    //         if ($this->Cars->save($car)) {
-    //             $this->Flash->success(__('The car has been saved.'));
+    public function importQuotes($id){
+        $car = $this->Cars->get($id, contain: []);
+        $httpClient = new Client();
+        // Define the URL and data
+        $url = 'https://app.dev.aws.dinggo.com.au/phptest/quotes';
+        $data = [
+            'username' => env('API_USERNAME'),
+            'key' => env('API_KEY'),
+            "licensePlate" => $car->license_plate,
+            "licenseState" => $car->license_state
+        ];
 
-    //             return $this->redirect(['action' => 'index']);
-    //         }
-    //         $this->Flash->error(__('The car could not be saved. Please, try again.'));
-    //     }
-    //     $this->set(compact('car'));
-    // }
+        // Send a POST request
+        $response = $httpClient->post($url, json_encode($data), [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json'
+            ]
+        ]);
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id Car id.
-     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    // public function edit($id = null)
-    // {
-    //     $car = $this->Cars->get($id, contain: []);
-    //     if ($this->request->is(['patch', 'post', 'put'])) {
-    //         $car = $this->Cars->patchEntity($car, $this->request->getData());
-    //         if ($this->Cars->save($car)) {
-    //             $this->Flash->success(__('The car has been saved.'));
 
-    //             return $this->redirect(['action' => 'index']);
-    //         }
-    //         $this->Flash->error(__('The car could not be saved. Please, try again.'));
-    //     }
-    //     $this->set(compact('car'));
-    // }
+        // Check for errors
+        if ($response->isOk()) {
+            $responseData = json_decode($response->getBody()->getContents(), true);
+            if ($responseData['success'] == 'ok') {
+                $quotesTable = TableRegistry::getTableLocator()->get('Quotes');
+                $quotes = $responseData['quotes'];
+                foreach ($quotes as $quote) {
+                    // Check if the quotes already exists based on repairer and car_id
+                    $existingQuote = $quotesTable->find()->where(['repairer' => $quote['repairer'], 'car_id' => $car->id])->first();
+                    if($existingQuote){
+                        // Update the existing quote record
+                        $quote['id'] = $existingQuote->id;
+                        $quoteEntity = $quotesTable->patchEntity($existingQuote, $quote);
+                    }else{
+                        // Create a new quotes entity
+                        $quote['car_id'] = $car->id;
+                        $quoteEntity = $quotesTable->newEntity($quote);
+                    }
+                    // Save the quotes entity
+                    $quotesTable->save($quoteEntity);
+                }
+                $this->Flash->success('Quotes imported successfully.');
+            }else{
+                $this->Flash->error('Failed to fetch Quotes data.');
+            }
+        } else {
+            $this->Flash->error('Failed to fetch Quotes data.');
+        }
 
-    /**
-     * Delete method
-     *
-     * @param string|null $id Car id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    // public function delete($id = null)
-    // {
-    //     $this->request->allowMethod(['post', 'delete']);
-    //     $car = $this->Cars->get($id);
-    //     if ($this->Cars->delete($car)) {
-    //         $this->Flash->success(__('The car has been deleted.'));
-    //     } else {
-    //         $this->Flash->error(__('The car could not be deleted. Please, try again.'));
-    //     }
-
-    //     return $this->redirect(['action' => 'index']);
-    // }
+        return $this->redirect(['action' => 'view', $id]);
+    }
 }

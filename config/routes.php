@@ -61,8 +61,10 @@ return function (RouteBuilder $routes): void {
          * ...and connect the rest of 'Pages' controller's URLs.
          */
         $builder->connect('/pages/*', 'Pages::display');
-
         $builder->connect('/cars', ['controller' => 'Cars', 'action' => 'index']);
+        $builder->connect('/cars/import-quotes/{id}', ['controller' => 'Cars', 'action' => 'importQuotes'], ['pass' => ['id'], 'id' => '\d+']);
+
+
 
         /*
          * Connect catchall routes for all controllers.

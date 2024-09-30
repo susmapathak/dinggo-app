@@ -40,6 +40,7 @@ class CarsTable extends Table
         $this->setTable('cars');
         $this->setDisplayField('license_plate');
         $this->setPrimaryKey('id');
+        $this->hasMany('Quotes');
     }
 
     /**

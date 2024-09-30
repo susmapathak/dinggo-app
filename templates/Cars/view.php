@@ -6,7 +6,7 @@
 $this->assign('title', 'Car Details');
 ?>
 
-<h1>Car Details</h1>
+<h2>Car Details</h2>
 
 <table class="u-full-width">
   <tbody>
@@ -40,7 +40,27 @@ $this->assign('title', 'Car Details');
     </tr>
   </tbody>
 </table>
+<h3>Quotes</h3>
+<a href="<?= $this->Url->build(['controller' => 'Cars', 'action' => 'importQuotes', $car->id]) ?>" class="button">Import Quotes</a>
+<table>
+    <thead>
+        <tr>
+            <th>Repairer</th>
+            <th>Price</th>
+            <th>Overview of Work</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($car->quotes as $quote): ?>
+            <tr>
+                <td><?= h($quote->repairer) ?></td>
+                <td><?= h($quote->price) ?></td>
+                <td><?= h($quote->overviewOfWork) ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
 
 <div>
-  <a href="<?= $this->Url->build(['action' => 'index']) ?>">Back to List</a>
+  <a href="<?= $this->Url->build(['action' => 'index']) ?>">Back to Cars</a>
 </div>
