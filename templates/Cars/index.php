@@ -6,7 +6,8 @@
 $this->assign('title', 'Cars List');
 ?>
 
-<h1>Cars List</h1>
+<h2>Cars List</h2>
+<?= $this->Html->link('Import Cars', ['action' => 'import'], ['class' => 'button']) ?>
 <table class="u-full-width">
   <thead>
       <tr>
