@@ -283,6 +283,11 @@ return [
             'driver' => Mysql::class,
             'persistent' => false,
             'timezone' => 'UTC',
+            'host' => env('DB_HOST', 'localhost'),
+            'username' => env('DB_USER', 'root'),
+            'password' => env('DB_PASSWORD', ''),
+            'database' => env('DB_NAME', ''),
+            'port' => env('DB_PORT', '8889'),
 
             /*
              * For MariaDB/MySQL the internal default changed from utf8 to utf8mb4, aka full utf-8 support
