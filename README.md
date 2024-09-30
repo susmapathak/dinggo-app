@@ -1,53 +1,67 @@
-# CakePHP Application Skeleton
+# CakePHP 5.1 Application
 
-![Build Status](https://github.com/cakephp/app/actions/workflows/ci.yml/badge.svg?branch=master)
-[![Total Downloads](https://img.shields.io/packagist/dt/cakephp/app.svg?style=flat-square)](https://packagist.org/packages/cakephp/app)
-[![PHPStan](https://img.shields.io/badge/PHPStan-level%207-brightgreen.svg?style=flat-square)](https://github.com/phpstan/phpstan)
+This is a CakePHP 5.1 application built with PHP 8. It provides functionality to import cars and quotes, using REST APIs to fetch and upsert data.
 
-A skeleton for creating applications with [CakePHP](https://cakephp.org) 5.x.
+## Features:
+- Cars management
+- Quotes management
+- Integration with external APIs
 
-The framework source code can be found here: [cakephp/cakephp](https://github.com/cakephp/cakephp).
+## Prerequisites
 
-## Installation
+Before setting up the project locally, make sure you have the following installed:
 
-1. Download [Composer](https://getcomposer.org/doc/00-intro.md) or update `composer self-update`.
-2. Run `php composer.phar create-project --prefer-dist cakephp/app [app_name]`.
+- **PHP 8.1 or higher**.
+- **Composer**: PHP dependency manager.
+- **MySQL** or any other supported database.
+- **Git**: For cloning the project repository.
 
-If Composer is installed globally, run
+Optional:
+- **MAMP/XAMPP/WAMP**: For local development environments that bundle PHP, MySQL, and Apache.
 
-```bash
-composer create-project --prefer-dist cakephp/app
-```
+## Setup Instructions
 
-In case you want to use a custom app dir name (e.g. `/myapp/`):
+Follow these steps to set up the project on your local machine:
 
-```bash
-composer create-project --prefer-dist cakephp/app myapp
-```
-
-You can now either use your machine's webserver to view the default home page, or start
-up the built-in webserver with:
+### 1. Clone the repository
+Clone the project repository from GitHub to your local machine:
 
 ```bash
-bin/cake server -p 8765
+git clone https://github.com/susmapathak/dinggo-app.git
+cd dinggo-app
 ```
 
-Then visit `http://localhost:8765` to see the welcome page.
+### 2. Install dependencies
 
-## Update
+After cloning the repository, navigate into the project directory and install the required dependencies using Composer:
 
-Since this skeleton is a starting point for your application and various files
-would have been modified as per your needs, there isn't a way to provide
-automated upgrades, so you have to do any updates manually.
+```bash
+composer install
+```
 
-## Configuration
+### 3. Set up the database
 
-Read and edit the environment specific `config/app_local.php` and set up the
-`'Datasources'` and any other configuration relevant for your application.
-Other environment agnostic settings can be changed in `config/app.php`.
+1. Create a new database for the application (e.g., `dinggo_app_db`).
+2. Create `.env` inside `config` folder. Update your `.env` file with the database credentials:
 
-## Layout
+```env
+DB_HOST=127.0.0.1
+DB_PORT=8889
+DB_NAME=dinggo_app_db
+DB_USER=root
+DB_PASSWORD=password
+```
+3. Run the database migrations to set up the necessary tables.
+```bash
+bin/cake migrations migrate
+```
+This will create the necessary tables in the database.
 
-The app skeleton uses [Milligram](https://milligram.io/) (v1.3) minimalist CSS
-framework by default. You can, however, replace it with any other library or
-custom styles.
+### 4. Run the application
+
+You can now start the CakePHP development server to run the application locally:
+
+```bash
+bin/cake server
+```
+By default, the application will be accessible at `http://localhost:8765`. You can open this URL in your browser to view the app.
