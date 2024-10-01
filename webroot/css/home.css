@@ -48,11 +48,11 @@ hr {
     -moz-osx-font-smoothing: grayscale;
     vertical-align: -1px;
 }
-.success:before {
+.configs .success:before {
     color: #88c671;
     content: "\0056";
 }
-.problem:before {
+.configs .problem:before {
     color: #d33d44;
     content: "\0057";
 }

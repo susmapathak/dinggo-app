@@ -43,11 +43,12 @@ $checkConnection = function (string $name) {
             Welcome to DingGo App
         </h1>
         <p>Using only photos DingGo will get you quotes from local repairers near you.</p>
-         <a href="<?= $this->Url->build(['controller' => 'Cars', 'action' => 'index']) ?>" class="button button-lg">Browse Cars</a>
+         <a href="<?= $this->Url->build(['controller' => 'Cars', 'action' => 'index']) ?>" class="button button-large">Browse Cars</a>
     </div>
 </header>
+<hr>
 
-<div class="row">
+<div class="row configs">
     <div class="column">
         <h4>Database Connection</h4>
         <?php

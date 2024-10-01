@@ -5,9 +5,12 @@
  */
 $this->assign('title', 'Cars List');
 ?>
+<div class="row">
+  <div class="column column-50"><h2>Cars List</h2></div>
 
-<h2>Cars List</h2>
-<?= $this->Html->link('Import Cars', ['action' => 'import'], ['class' => 'button']) ?>
+  <div class="column column-50"><a href="<?= $this->Url->build(['action' => 'import']) ?>" class="float-right button">Import Cars</a></div>
+</div>
+
 <table class="u-full-width">
   <thead>
       <tr>
