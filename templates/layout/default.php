@@ -39,9 +39,10 @@ $cakeDescription = 'Dinggo App By Susma Pathak';
             <a href="<?= $this->Url->build('/') ?>"><span>DingGo</span>App</a>
         </div>
         <div class="top-nav-links">
-            <a target="_blank" rel="noopener" href="https://book.cakephp.org/5/">Documentation</a>
-            <a target="_blank" rel="noopener" href="https://api.cakephp.org/">API</a>
             <a href="<?= $this->Url->build(['controller' => 'Cars', 'action' => 'index']) ?>">Cars</a>
+            <a target="_blank" rel="noopener" href="https://www.dinggo.com.au/">About Us</a>
+            <a target="_blank" rel="noopener" href="https://www.dinggo.com.au/">Contact</a>
+
         </div>
     </nav>
     <main class="main">

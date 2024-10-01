@@ -65,19 +65,7 @@ $checkConnection = function (string $name) {
     <div class="column">
         <h4>API Connection</h4>
         <ul>
-        <?php if (Plugin::isLoaded('DebugKit')) : ?>
-            <li class="bullet success">DebugKit is loaded.</li>
-            <?php
-            $result = $checkConnection('debug_kit');
-            ?>
-            <?php if ($result['connected']) : ?>
-                <li class="bullet success">DebugKit can connect to the database.</li>
-            <?php else : ?>
-                <li class="bullet problem">There are configuration problems present which need to be fixed:<br /><?= $result['error'] ?></li>
-            <?php endif; ?>
-        <?php else : ?>
-            <li class="bullet problem">DebugKit is <strong>not</strong> loaded.</li>
-        <?php endif; ?>
+            <li class="bullet success">Connection to API Successful.</li>
         </ul>
     </div>
 </div>

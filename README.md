@@ -2,6 +2,11 @@
 
 This is a CakePHP 5.1 application built with PHP 8. It provides functionality to import cars and quotes, using REST APIs to fetch and upsert data.
 
+## Live Demo:
+This site has been deplyed to AWS EC2 using LAMP stack. It can found in this URL:
+
+https://susmapathak.site/
+
 ## Features:
 - Cars management
 - Quotes management
@@ -31,6 +36,11 @@ git clone https://github.com/susmapathak/dinggo-app.git
 cd dinggo-app
 ```
 
+Copy the environment configuration file:
+```bash
+cp config/app_local.example.php config/app_local.php
+```
+
 ### 2. Install dependencies
 
 After cloning the repository, navigate into the project directory and install the required dependencies using Composer:
@@ -42,7 +52,7 @@ composer install
 ### 3. Set up the database
 
 1. Create a new database for the application (e.g., `dinggo_app_db`).
-2. Create `.env` inside `config` folder. Update your `.env` file with the database credentials:
+2. Create `.env` inside `config` folder. Update your `.env` file with the database credentials. Also, add API username and key for accessing API.
 
 ```env
 DB_HOST=127.0.0.1
@@ -50,6 +60,8 @@ DB_PORT=8889
 DB_NAME=dinggo_app_db
 DB_USER=root
 DB_PASSWORD=password
+API_USERNAME=username
+API_KEY=key
 ```
 3. Run the database migrations to set up the necessary tables.
 ```bash
